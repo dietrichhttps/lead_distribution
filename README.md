@@ -5,11 +5,14 @@
 ## 🚀 Быстрый запуск
 
 ```bash
+# Создание и активация виртуального окружения
+python -m venv .venv && source .venv/bin/activate
+
 # Установка зависимостей
 pip install -r requirements.txt
 
 # Запуск сервера
-uvicorn main:app --reload --host 0.0.0.0 --port 8000 
+uvicorn app.main:app --reload --host 0.0.0.0 --port 8000 
 ```
 После запуска откройте: http://localhost:8000/docs для доступа к Swagger UI.
 
