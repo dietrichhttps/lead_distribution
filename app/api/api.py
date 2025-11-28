@@ -10,8 +10,22 @@ from app.schemas.source import SourceResponse, SourceBase, SourceOperatorAssignm
 from app.schemas.ticket import TicketResponse, TicketCreate
 from app.services.distribution import get_db, DistributionService
 
-app = FastAPI(title="Lead Distribution CRM", version="1.0.0")
+from contextlib import asynccontextmanager
+from fastapi import FastAPI
+from app.database import create_tables
 
+@asynccontextmanager
+async def lifespan(app: FastAPI):
+    create_tables()
+    print("✅ Таблицы базы данных созданы")
+    yield
+    print("🚪 Приложение останавливается")
+
+app = FastAPI(
+    title="Lead Distribution CRM",
+    version="1.0.0",
+    lifespan=lifespan
+)
 
 # ==================== API ЭНДПОИНТЫ ====================
 @app.post("/operators/", response_model=OperatorResponse)
